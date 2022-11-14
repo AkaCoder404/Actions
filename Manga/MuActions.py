@@ -180,6 +180,7 @@ class MangaUpdates:
 # run
 bot = MangaUpdates(username, password)
 message = bot.update()
+message = "User: " + username + "\n" + message
 if message != "":
     pushover_message(app_token=app_token, user_key=user_key, device=device, message=message)
 else:
