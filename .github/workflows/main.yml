@@ -19,8 +19,8 @@ jobs:
     env:
       APP_TOKEN: ${{ secrets.APP_TOKEN }}
       USER_KEY: ${{ secrets.USER_KEY }}
-      USERNAME: ${{ secrets.MU_USERNAME }}
-      PASSWORD: ${{ secrets.MU_PASSWORD }}
+      MU_USERNAME: ${{ secrets.MU_USERNAME }}
+      MU_PASSWORD: ${{ secrets.MU_PASSWORD }}
     steps:
       - name: checkout repo content
         uses: actions/checkout@v2 # checkout the repository content to github runner.
