@@ -1,0 +1,38 @@
+# name: py
+name: Actions
+on: 
+  push: 
+    branches:
+      - main
+
+  schedule: 
+    # - cron: "* */12 * * *"  #runs every 12 hours
+    # - cron: "0 9 * * *" # runs at 9am
+    # - cron: "0 12 * * *" # runs at 12am
+    # - cron: "0 18 * * *" # runs at 6pm
+    - cron: "0 10 * * *" # runs at 10am UTC, 6pm Beijing
+
+jobs:
+  build:
+    runs-on: ubuntu-latest       # run on latest ubuntu version
+    environment: manga
+    env:
+      APP_TOKEN: ${{ secrets.APP_TOKEN }}
+      USER_KEY: ${{ secrets.USER_KEY }}
+      USERNAME: ${{ secrets.MU_USERNAME }}
+      PASSWORD: ${{ secrets.MU_PASSWORD }}
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content to github runner.
+      - name: setup python
+        uses: actions/setup-python@v2 # set up python environment
+        with:
+          python-version: 3.8 #install the python needed
+      - name: install python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests bs4 lxml
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: execute py script # run the run.py to get the latest data
+        run: |
+          python Manga/MuActions.py
